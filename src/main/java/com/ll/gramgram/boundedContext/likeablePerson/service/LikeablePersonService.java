@@ -50,4 +50,17 @@ public class LikeablePersonService {
         return likeablePersonRepository.findByFromInstaMemberId(fromInstaMemberId);
     }
 
+    @Transactional
+    public RsData<LikeablePerson> delete(Member member, Long id) {
+        String name = null;
+        if (member.hasConnectedInstaMember() == false) {
+            return RsData.of("F-2", "먼저 본인의 인스타그램 아이디를 입력해야 합니다.");
+        }
+        Optional<LikeablePerson> findPerson = likeablePersonRepository.findById(id);
+        LikeablePerson likeablePerson = findPerson.get();
+        name = likeablePerson.getToInstaMemberUsername();
+        likeablePersonRepository.delete(likeablePerson);
+        return RsData.of("S-1", "입력하신 인스타유저(%s)를 호감리스트에서 삭제했습니다..".formatted(name), likeablePerson);
+    }
+
 }
