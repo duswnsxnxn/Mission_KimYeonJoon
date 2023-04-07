@@ -50,17 +50,38 @@ public class LikeablePersonService {
         return likeablePersonRepository.findByFromInstaMemberId(fromInstaMemberId);
     }
 
+    public Optional<LikeablePerson> findByLikeablePersonId(Long id) {
+        return likeablePersonRepository.findById(id);
+    }
+
+    public RsData checkAuthorize(Member member, LikeablePerson likeablePerson) {
+        if (likeablePerson == null) {
+            return RsData.of("F-1", "이미 삭제되었습니다.");
+        }
+
+        long actorInstaMeberId = member.getInstaMember().getId();
+        long likeableFromInstaMember = likeablePerson.getFromInstaMember().getId();
+        if (actorInstaMeberId != likeableFromInstaMember) {
+            return RsData.of("F-2", "권한이 없습니다.");
+        }
+        return RsData.of("S-1", "권한이 있습니다.");
+    }
+
+
     @Transactional
-    public RsData<LikeablePerson> delete(Member member, Long id) {
-        String name = null;
-        if (member.hasConnectedInstaMember() == false) {
+    public RsData<LikeablePerson> deleteLikeablePerson(Member member, Long id) {
+
+        if (!member.hasConnectedInstaMember()) {
             return RsData.of("F-2", "먼저 본인의 인스타그램 아이디를 입력해야 합니다.");
         }
-        Optional<LikeablePerson> findPerson = likeablePersonRepository.findById(id);
-        LikeablePerson likeablePerson = findPerson.get();
-        name = likeablePerson.getToInstaMemberUsername();
+        Optional<LikeablePerson> optional = likeablePersonRepository.findById(id);
+        if (optional.isEmpty()) {
+            return RsData.of("F-2", "입력하신 인스타유저는 호감리스트에 존재하지 않습니다.");
+        }
+        LikeablePerson likeablePerson = optional.get();
+        String name = likeablePerson.getToInstaMemberUsername();
         likeablePersonRepository.delete(likeablePerson);
-        return RsData.of("S-1", "입력하신 인스타유저(%s)를 호감리스트에서 삭제했습니다..".formatted(name), likeablePerson);
+        return RsData.of("S-1", "입력하신 인스타유저(%s)를 호감리스트에서 삭제했습니다..".formatted(name));
     }
 
 }
