@@ -7,9 +7,9 @@ spring:
       client:
         registration:
           kakao:
-            clientId: efe4d3c13fe66ab77779e963a7cae61f
+            clientId: da98f9f5a3a42cb1a2e41ebaee86cd3b
             scope:
             redirect-uri: http://localhost:9050/login/oauth2/code/kakao
           google:
-            client_id: 794404975519-q53cjque6cprqu9lm89g21pam3l5p8rv.apps.googleusercontent.com
-            client_secret: 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
+            client_id: 794404975519-hadbu9kg1dpbiu0oqu7h6os2o33a4q0k.apps.googleusercontent.com
+            client_secret: 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
