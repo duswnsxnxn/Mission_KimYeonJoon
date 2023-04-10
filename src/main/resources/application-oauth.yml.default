@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: 'mysql 아이디'
+    password: 'mysql 비밀번호'
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            clientId: '카카오 클라이언트 ID'
+          google:
+            clientId: '구글 클라이언트 ID'
+            client-secret: '구글 클라이언트 시크릿'g

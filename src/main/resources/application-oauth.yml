@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: lldj
+    password: lldj123414
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            clientId: efe4d3c13fe66ab77779e963a7cae61f
+            scope:
+            redirect-uri: http://localhost:9050/login/oauth2/code/kakao
+          google:
+            client_id: 794404975519-q53cjque6cprqu9lm89g21pam3l5p8rv.apps.googleusercontent.com
+            client_secret: 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
