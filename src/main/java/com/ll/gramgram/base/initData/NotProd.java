@@ -1,5 +1,6 @@
 package com.ll.gramgram.base.initData;
 
+import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.instaMember.service.InstaMemberService;
 import com.ll.gramgram.boundedContext.likeablePerson.service.LikeablePersonService;
 import com.ll.gramgram.boundedContext.member.entity.Member;
@@ -31,9 +32,11 @@ public class NotProd {
             instaMemberService.connect(memberUser2, "insta_user2", "M");
             instaMemberService.connect(memberUser3, "insta_user3", "W");
             instaMemberService.connect(memberUser4, "insta_user4", "M");
+            InstaMember user3InstaMember = memberUser3.getInstaMember();
 
             for (int i = 1000; i < 1010; i++) {
                 likeablePersonService.like(memberUser3, String.valueOf(i), 1);
+//                System.out.println("사이즈" + user3InstaMember.getToLikeablePeople().size());
             }
         };
     }
