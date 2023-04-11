@@ -30,6 +30,12 @@ public class LikeablePersonService {
             return RsData.of("F-1", "본인을 호감상대로 등록할 수 없습니다.");
         }
 
+        List<LikeablePerson> list = findByFromInstaMemberId(member.getInstaMember().getId());
+
+        if (list.size() > 10) {
+            return RsData.of("F-1", "11명 이상의 호감상대를 등록 할 수 없습니다.");
+        }
+
         InstaMember fromInstaMember = member.getInstaMember();
         InstaMember toInstaMember = instaMemberService.findByUsernameOrCreate(username).getData();
 
