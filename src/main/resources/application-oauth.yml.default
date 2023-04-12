@@ -2,12 +2,17 @@ spring:
   datasource:
     username: 'mysql 아이디'
     password: 'mysql 비밀번호'
-  security:
-    oauth2:
-      client:
-        registration:
-          kakao:
-            clientId: '카카오 클라이언트 ID'
-          google:
-            clientId: '구글 클라이언트 ID'
-            client-secret: '구글 클라이언트 시크릿'g
+    security:
+      oauth2:
+        client:
+          registration:
+            kakao:
+              clientId: '카카오 클라이언트 ID'
+              redirect-uri: '카카오 리다이렉트 URI'
+            google:
+              client_id: '구글 클라이언트 ID'
+              client_secret: '구글 클라이언트 시크릿'
+            naver:
+              client-id: '네이버 클라이언트 ID'
+              client-secret: '네이버 클라이언트 시크릿'
+              redirect-uri: '네이버 리다이렉트 URI'

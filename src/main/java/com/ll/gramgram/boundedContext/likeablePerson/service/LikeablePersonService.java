@@ -1,5 +1,6 @@
 package com.ll.gramgram.boundedContext.likeablePerson.service;
 
+import com.ll.gramgram.base.appConfig.AppConfig;
 import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.instaMember.service.InstaMemberService;
@@ -56,7 +57,8 @@ public class LikeablePersonService {
         // 11명 이상인데 조건식에서는 (list.size() > 9) 이렇게 설정한 이유는 사이즈를 먼저 비교하고 save하는 로직이기 때문이다.
         // 만약 사용자가 10번째 호감등록을 하려고 할때 목록의 사이즈는 9인 상태일 것이고 9보다 커지지는 않은 상태이니 조건문을 통과하고
         // save한다. 그리고 다시 1명을 더 호감등록 한다면 목록 사이즈는 10이고 조건식을 만족하지 못해 입구컷 날 것이다.
-        if (list.size() > 9) {
+        long max = AppConfig.getLikeablePersonFromMax();
+        if (list.size() > max) {
             return RsData.of("F-1", "11명 이상의 호감상대를 등록 할 수 없습니다.");
         }
 
