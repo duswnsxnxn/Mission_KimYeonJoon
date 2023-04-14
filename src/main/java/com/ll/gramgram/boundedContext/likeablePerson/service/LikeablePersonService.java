@@ -31,11 +31,7 @@ public class LikeablePersonService {
         }
 
         if (checked.getResultCode().equals("S-2")) {
-            LikeablePerson person = (LikeablePerson) checked.getData();
-            String before = person.getAttractiveTypeDisplayName();
-            person.setAttractiveTypeCode(attractiveTypeCode);
-            String after = person.getAttractiveTypeDisplayName();
-            return RsData.of("S-2", "%s에 대한 호감사유를 %s에서 %s으로 변경합니다.".formatted(username, before, after));
+            return updateAttractiveType(username, attractiveTypeCode, checked);
         }
 
         // 로그인한 사용자가 등록한 인스타 계정
@@ -59,6 +55,14 @@ public class LikeablePersonService {
         fromInstaMember.addFromLikeablePerson(likeablePerson);
 
         return RsData.of("S-1", "입력하신 인스타유저(%s)가 호감상대로 등록되었습니다.".formatted(username), likeablePerson);
+    }
+
+    private RsData<LikeablePerson> updateAttractiveType(String username, int attractiveTypeCode, RsData checked) {
+        LikeablePerson person = (LikeablePerson) checked.getData();
+        String before = person.getAttractiveTypeDisplayName();
+        person.setAttractiveTypeCode(attractiveTypeCode);
+        String after = person.getAttractiveTypeDisplayName();
+        return RsData.of("S-2", "%s에 대한 호감사유를 %s에서 %s으로 변경합니다.".formatted(username, before, after));
     }
 
     public RsData canLike(Member actor, String username, int attractiveTypeCode) {
