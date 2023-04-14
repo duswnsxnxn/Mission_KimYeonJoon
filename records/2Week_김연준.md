@@ -45,3 +45,9 @@
 - 테이블로부터 조인해서 가져올 때 jpa레파지토리의 쿼리 메소드 방식과 jpql을 이용한 방식 둘 중 뭐가 주로 쓰이는지 궁금합니다.
 
 **[Refactoring]**
+
+- 각 엔티티마다 중복으로 들어있는 컬럼으로 구성된 baseEntity를 생성 후 상속받는 방식으로 해결
+- LikeablePersonService 삭제 서비스에서 연관 관계에 있는 리스트 엘리먼트 삭제 처리
+- LikeablePersonService 좋아요 서비스에서 네이밍 및 역할에 따라 분리하여 가독성 높임
+- LikeablePersonService 좋아요 제한수를 기존에 선언부에서만 설정해준 값을 yml에 저장하고 전역에서 값을 불러오는 방식으로 변경
+- CustomOAuth2UserService Provider가 네이버라면 { id : CL-asda } 와 같이 JSON형태인 문자열로 받아지기 때문에 따로 필터링처리
