@@ -28,6 +28,7 @@ public class NotProd {
 
             Member memberUser5ByKakao = memberService.whenSocialLogin("KAKAO", "KAKAO__2743046639").getData();
             Member memberUser6ByGoogle = memberService.whenSocialLogin("GOOGLE", "GOOGLE__103209698441418943359").getData();
+            Member memberUser6ByNaver = memberService.whenSocialLogin("NAVER", "NAVER__CL-ifNMOi0p3nlxX5SpNON8tr5EHIdwAQE_Bv_ym45E").getData();
 
             instaMemberService.connect(memberUser2, "insta_user2", "M");
             instaMemberService.connect(memberUser3, "insta_user3", "W");
@@ -36,7 +37,6 @@ public class NotProd {
 
             for (int i = 1000; i < 1010; i++) {
                 likeablePersonService.like(memberUser3, String.valueOf(i), 1);
-//                System.out.println("사이즈" + user3InstaMember.getToLikeablePeople().size());
             }
         };
     }

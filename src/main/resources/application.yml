@@ -66,4 +66,4 @@ server:
 custom:
   likeablePerson:
     from:
-      max: 9
+      max: 10
