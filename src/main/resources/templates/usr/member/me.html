@@ -7,10 +7,39 @@
 <body>
 
 <main layout:fragment="main">
-    <div>번호 : <span th:text="${@rq.member.id}"></span></div>
-    <div>이름 : <span th:text="${@rq.member.username}"></span></div>
-    <div>가입날짜 : <span th:text="${#temporals.format(@rq.member.createDate, 'yyyy-MM-dd HH:mm')}"></span></div>
-    <div>수정날짜 : <span th:text="${#temporals.format(@rq.member.modifyDate, 'yyyy-MM-dd HH:mm')}"></span></div>
+    <div class="hero-content flex-col">
+        <div class="text-center mb-5">
+            <h1 class="text-5xl my-2 font-bold">내 정보</h1>
+        </div>
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
+                <div class="overflow-x-auto">
+                    <table class="table w-full">
+                        <tr>
+                            <td>번호</td>
+                            <td><span th:text="${@rq.member.id}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>이름</td>
+                            <td><span th:text="${@rq.member.username}"></span></td>
+                        </tr>
+                        <tr>
+                            <td>가입날짜</td>
+                            <td><span
+                                    th:text="${#temporals.format(@rq.member.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>수정날짜</td>
+                            <td><span
+                                    th:text="${#temporals.format(@rq.member.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 

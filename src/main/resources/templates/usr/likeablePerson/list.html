@@ -7,27 +7,63 @@
 <body>
 
 <main layout:fragment="main">
-    <th:block th:unless="${@rq.member.hasConnectedInstaMember}">
-        <div>먼저 본인의 인스타그램 아이디를 입력해주세요.</div>
-
-        <div>
-            <a href="/instaMember/connect" class="btn btn-link">본인의 인스타그램 아이디 입력하기</a>
+    <div class="hero-content flex-col">
+        <div class="text-center mb-5">
+            <h1 class="text-5xl my-2 font-bold">호감 상대 목록</h1>
         </div>
-    </th:block>
+        <div class="card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
+            <div class="card-body">
+                <th:block th:unless="${@rq.member.hasConnectedInstaMember}">
+                    <div class="flex flex-col gap-4">
+                        <div>먼저 나의 인스타그램 계정을 등록해주세요.</div>
+                        <a href="/instaMember/connect" class="btn btn-primary">인스타 등록하러 가기</a>
+                    </div>
+                </th:block>
+                <th:block th:if="${@rq.member.hasConnectedInstaMember}">
+                    <div class="overflow-x-auto">
+                        <table class="table w-full">
+                            <!-- head -->
+                            <thead>
+                            <tr class="text-center">
+                                <th>호감 상대 계정</th>
+                                <th>매력</th>
+                                <th>삭제하기</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- row -->
+                            <li th:each="likeablePerson: ${likeablePeople}" class="flex justify-between">
+                                <tr>
+                                    <td><span class="toInstaMember_username"
+                                              th:text="|@${likeablePerson.toInstaMember.username}|"></span></td>
+                                    <td class="text-center"><span class="toInstaMember_attractiveTypeDisplayName"
+                                                                  th:text="${likeablePerson.attractiveTypeDisplayName}"></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-circle btn-outline btn-sm"
+                                           href="javascript:;"
+                                           onclick="if ( confirm('정말로 삭제하시겠습니까?') ) $(this).next().submit();">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none"
+                                                 viewBox="0 0 12 12" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      stroke-width="2" d="M3 9L9 3M3 3l6 6"/>
+                                            </svg>
+                                        </a>
+                                        <form hidden th:action="@{|/likeablePerson/${likeablePerson.id}|}"
+                                              method="POST">
+                                            <input type="hidden" name="_method" value="delete">
+                                        </form>
+                                    </td>
+                                </tr>
+                            </li>
+                            </tbody>
+                        </table>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
 
-    <th:block th:if="${@rq.member.hasConnectedInstaMember}">
-        <ul>
-            <li th:each="likeablePerson: ${likeablePeople}">
-                <span class="toInstaMember_username" th:text="${likeablePerson.toInstaMember.username}"></span>
-                <span class="toInstaMember_attractiveTypeDisplayName"
-                      th:text="${likeablePerson.attractiveTypeDisplayName}"></span>
-                <a href="javascript:;" onclick="if ( confirm('정말로 삭제하시겠습니까?') ) $(this).next().submit();">삭제</a>
-                <form hidden th:action="@{|/likeablePerson/${likeablePerson.id}|}" method="POST">
-                    <input type="hidden" name="_method" value="delete">
-                </form>
-            </li>
-        </ul>
-    </th:block>
 </main>
 </body>
 

@@ -13,7 +13,7 @@
 
             form.username.value = form.username.value.trim(); // 입력란의 입력값에 있을지 모르는 좌우공백제거
 
-            if (form.username.value.length === 0) {
+            if (form.username.value.length == 0) {
                 toastWarning('아이디를 입력해주세요.');
                 form.username.focus();
                 return;
@@ -29,7 +29,7 @@
 
             form.password.value = form.password.value.trim(); // 입력란의 입력값에 있을지 모르는 좌우공백제거
 
-            if (form.password.value.length === 0) {
+            if (form.password.value.length == 0) {
                 form.password.focus();
                 toastWarning('비밀번호를 입력해주세요.');
                 return;
@@ -45,30 +45,49 @@
         }
     </script>
 
-    <form th:action method="POST" class="p-10 flex flex-col gap-4" onsubmit="LoginForm__submit(this); return false;">
-        <div>
-            <input type="text" name="username" maxlength="30" placeholder="아이디" class="input input-bordered">
-        </div>
-        <div>
-            <input type="password" name="password" maxlength="30" placeholder="비밀번호" class="input input-bordered">
-        </div>
-        <div>
-            <input type="submit" value="로그인" class="btn btn-primary">
-        </div>
-    </form>
 
-    <div>
-        <a class="btn btn-link" href="/oauth2/authorization/kakao">
-            카카오로 로그인하기
-        </a>
+    <div class="hero-content flex-col">
+        <div class="text-center">
+            <h2 class="text-5xl mb-5 mx-5 font-bold">그램그램 로그인</h2>
+        </div>
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div class="card-body">
+                <form th:action method="POST" onsubmit="LoginForm__submit(this); return false;">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">ID</span>
+                        </label>
+                        <input type="text" name="username" maxlength="30" placeholder="아이디"
+                               class="input input-bordered">
+                    </div>
+                    <div class="form-control mt-3">
+                        <label class="label">
+                            <span class="label-text">Password</span>
+                        </label>
+                        <input type="password" name="password" maxlength="30" placeholder="비밀번호"
+                               class="input input-bordered">
+                    </div>
+                    <div class="form-control mt-8 gap-4">
+                        <input type="submit" value="로그인" class="btn btn-primary">
+                        <div class="divider"></div>
+                        <a class="btn btn-outline btn-warning flex gap-2" href="/oauth2/authorization/kakao">
+                            <i class="fa-solid fa-comment"></i>
+                            카카오 로그인
+                        </a>
 
-        <a class="btn btn-link" href="/oauth2/authorization/google">
-            구글 로그인하기
-        </a>
+                        <a class="btn btn-outline btn-error flex gap-2" href="/oauth2/authorization/google">
+                            <i class="fa-brands fa-google"></i>
+                            구글 로그인
+                        </a>
 
-        <a class="btn btn-link" href="/oauth2/authorization/naver">
-            네이버 로그인하기
-        </a>
+                        <a class="btn btn-outline btn-success flex gap-2" href="/oauth2/authorization/naver">
+                            <i class="fa-solid fa-n"></i>
+                            네이버 로그인
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 </body>

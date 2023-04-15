@@ -7,9 +7,21 @@
 <body>
 
 <main layout:fragment="main">
-    메인입니다.
-
-    <a class="btn btn-link" href="/historyBackTest">히스토리 백 테스트</a>
+    <div class="hero-content text-center">
+        <div th:if="${@rq.login}" style="font-size:1.5em; word-break: break-all  ;">
+            <span th:text="|${@rq.member.username}님|"></span>
+            <p>안녕하세요!</p>
+            <div th:if="${@rq.login and @rq.member.hasConnectedInstaMember()}">
+                <span th:text="|호감 받음/호감 줌(${#lists.size(@rq.member.instaMember.toLikeablePeople)}/${#lists.size(@rq.member.instaMember.fromLikeablePeople)})|"></span>
+            </div>
+        </div>
+        <div th:if="${@rq.logout}">
+            <h1 class="text-5xl font-bold">환영합니다</h1>
+            <p class="py-6">회원가입 또는 로그인하고 그램그램 서비스를 이용해보세요.</p>
+            <a class="btn btn-primary" href="/member/join">회원가입</a>
+            <a class="btn btn-primary" href="/member/login">로그인</a>
+        </div>
+    </div>
 </main>
 
 </body>

@@ -36,12 +36,20 @@
             form.submit(); // 폼 발송
         }
     </script>
-
+    <div class="hero-content flex-col">
+        <div class="text-center mb-5">
+            <h1 class="text-5xl my-2 font-bold">인스타 등록</h1>
+        </div>
+    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div class="card-body">
     <form th:action method="POST" class="p-10 max-w-sm flex flex-col gap-4"
           onsubmit="ConnectForm__submit(this); return false;">
         <div>
-            <input type="text" name="username" autocomplete="off" maxlength="30" placeholder="인스타그램 아이디"
-                   class="input input-bordered">
+            <input type="text" name="username" maxlength="30" placeholder="인스타그램 아이디" class="input input-bordered" onchange="$(this).keyup();" onkeyup="$(this).next().children(':last-child').text(this.value.trim());" onpaste="setTimeoutZero(() => $(this).keyup());">
+            <a href onclick="$(this).attr('href', $(this).text().replaceAll(' ', ''));" target="_blank" style="display:flex;" class="mt-3" onmouseover="">
+                <span>https://instagram.com/</span>
+                <span></span>
+            </a>
         </div>
         <div>
             <div class="form-control">
@@ -61,6 +69,9 @@
             <input type="submit" value="정보입력" class="btn btn-primary">
         </div>
     </form>
+        </div>
+    </div>
+    </div>
 </main>
 </body>
 
