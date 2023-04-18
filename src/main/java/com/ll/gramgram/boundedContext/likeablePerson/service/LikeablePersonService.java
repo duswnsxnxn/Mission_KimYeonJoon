@@ -57,15 +57,15 @@ public class LikeablePersonService {
         return RsData.of("S-1", "입력하신 인스타유저(%s)가 호감상대로 등록되었습니다.".formatted(username), likeablePerson);
     }
 
-    private RsData<LikeablePerson> updateAttractiveType(String username, int attractiveTypeCode, RsData checked) {
-        LikeablePerson person = (LikeablePerson) checked.getData();
+    private RsData<LikeablePerson> updateAttractiveType(String username, int attractiveTypeCode, RsData<LikeablePerson> checked) {
+        LikeablePerson person = checked.getData();
         String before = person.getAttractiveTypeDisplayName();
         person.setAttractiveTypeCode(attractiveTypeCode);
         String after = person.getAttractiveTypeDisplayName();
         return RsData.of("S-2", "%s에 대한 호감사유를 %s에서 %s으로 변경합니다.".formatted(username, before, after));
     }
 
-    public RsData canLike(Member actor, String username, int attractiveTypeCode) {
+    public RsData<LikeablePerson> canLike(Member actor, String username, int attractiveTypeCode) {
 
         if (actor.hasConnectedInstaMember() == false) {
             return RsData.of("F-1", "먼저 본인의 인스타그램 아이디를 입력해야 합니다.");
