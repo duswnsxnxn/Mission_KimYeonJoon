@@ -13,6 +13,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -40,7 +41,7 @@ public class LikeablePerson extends BaseEntity {
 
     // 초 단위에서 올림 해주세요.
     public String getModifyUnlockDateRemainStrHuman() {
-        return "2시간 16분";
+        return modifyUnlockDate.format(DateTimeFormatter.ofPattern("HH시:mm분:ss초"));
     }
 
     public RsData updateAttractionTypeCode(int attractiveTypeCode) {
