@@ -8,6 +8,7 @@ import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.likeablePerson.repository.LikeablePersonRepository;
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import com.ll.gramgram.boundedContext.member.service.MemberService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -262,5 +264,20 @@ public class LikeablePersonServiceTests {
         assertThat(
                 likeablePersonToBts.getModifyUnlockDate().isAfter(coolTime)
         ).isTrue();
+    }
+
+    @DisplayName("쿨타임 중 호감표시하면 에러메시지 출력")
+    @Test
+    void t009() throws Exception {
+        // given
+        LocalDateTime coolTime = AppConfig.genLikeablePersonModifyUnlockDate();
+        Member memberUser3 = memberService.findByUsername("user3").orElseThrow();
+        // when
+        likeablePersonService.like(memberUser3, "bts", 3).getMsg();
+        String RsMsg = likeablePersonService.like(memberUser3, "bts", 2).getMsg();
+        // then
+        Assertions.assertThat(RsMsg).
+                isEqualTo(coolTime.format(DateTimeFormatter.ofPattern("HH시:mm분:ss초")) + "에 가능합니다."
+        );
     }
 }
