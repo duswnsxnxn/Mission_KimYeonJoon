@@ -120,7 +120,7 @@ public class LikeablePersonService {
                 .filter(e -> e.getToInstaMember().getUsername().equals(username))
                 .findFirst()
                 .orElse(null);
-
+        // 쿨타임 체크
         if (fromLikeablePerson != null && fromLikeablePerson.getModifyUnlockDate().isAfter(LocalDateTime.now())) {
             return RsData.of("F-3", fromLikeablePerson.getModifyUnlockDateRemainStrHuman() + "에 가능합니다.");
         }

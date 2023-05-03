@@ -6,10 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Getter
@@ -17,6 +20,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @ToString(callSuper = true)
 public class Notification extends BaseEntity {
+    @Setter
     private LocalDateTime readDate;
     @ManyToOne
     @ToString.Exclude
@@ -29,4 +33,8 @@ public class Notification extends BaseEntity {
     private int oldAttractiveTypeCode; // 해당사항 없으면 0
     private String newGender; // 해당사항 없으면 null
     private int newAttractiveTypeCode; // 해당사항 없으면 0
+
+    public String getReadDateStr() {
+        return readDate.format(DateTimeFormatter.ofPattern("HH시:mm분, " + ChronoUnit.MINUTES.between(readDate, LocalDateTime.now()) + "분 전"));
+    }
 }

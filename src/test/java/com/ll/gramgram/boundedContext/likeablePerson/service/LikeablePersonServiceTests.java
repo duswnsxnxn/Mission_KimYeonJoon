@@ -271,11 +271,15 @@ public class LikeablePersonServiceTests {
     void t009() throws Exception {
         // given
         LocalDateTime coolTime = AppConfig.genLikeablePersonModifyUnlockDate();
+        // NotProd가 실행되어 저장되있는 user3이름으로 된 member를 가져와서
         Member memberUser3 = memberService.findByUsername("user3").orElseThrow();
         // when
+        // bts이름을 가진 인스타 계정에 호감 표시를 하고
         likeablePersonService.like(memberUser3, "bts", 3).getMsg();
+        // 호감 수정을 바로 하려고 하면 쿨타임 예외처리 로직에 검출되어 예외 메세지를 반환받는다.
         String RsMsg = likeablePersonService.like(memberUser3, "bts", 2).getMsg();
         // then
+        // 반환된 메세지와 내가 의도한 쿨타임 예외 메세지와 같은지 비교
         Assertions.assertThat(RsMsg).
                 isEqualTo(coolTime.format(DateTimeFormatter.ofPattern("HH시:mm분:ss초")) + "에 가능합니다."
         );
