@@ -37,4 +37,20 @@ public class Notification extends BaseEntity {
     public String getReadDateStr() {
         return readDate.format(DateTimeFormatter.ofPattern("HH시:mm분, " + ChronoUnit.MINUTES.between(readDate, LocalDateTime.now()) + "분 전"));
     }
+
+    public String getOldAttractiveTypeDisplayName() {
+        return switch (oldAttractiveTypeCode) {
+            case 1 -> "외모";
+            case 2 -> "성격";
+            default -> "능력";
+        };
+    }
+
+    public String getNewAttractiveTypeDisplayName() {
+        return switch (newAttractiveTypeCode) {
+            case 1 -> "외모";
+            case 2 -> "성격";
+            default -> "능력";
+        };
+    }
 }
