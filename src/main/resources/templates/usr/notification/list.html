@@ -37,7 +37,7 @@
                         </div>
                         <div th:if="${notification.getTypeCode() == 'Like'}">
                             어떤 <span class="badge badge-primary" th:text="${notification.getFromInstaMember().getGenderDisplayName()}"></span>이 당신을 <span
-                                class="badge badge-primary" th:text="${likeable.getAttractiveTypeDisplayName()}"></span> 때문에 좋아합니다.
+                                class="badge badge-primary" th:text="${notification.getOldAttractiveTypeDisplayName()}"></span> 때문에 좋아합니다.
                         </div>
                         <div th:if="${notification.getTypeCode() == 'ModifyAttractiveType'}">
                             어떤 <span class="badge badge-primary" th:text="${notification.getFromInstaMember().getGenderDisplayName()}"></span>이 당신에 대한 호감사유를 <span

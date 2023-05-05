@@ -33,15 +33,6 @@ public class NotificationController {
         InstaMember toInstaMember = rq.getMember().getInstaMember();
 
         List<Notification> notifications = notificationService.findByToInstaMember(toInstaMember);
-        String toInstaMemberUsername = toInstaMember.getUsername();
-        if (notifications.size() != 0) {
-            String fromInstaMemberUsername = notifications.get(0).getFromInstaMember().getUsername();
-            Optional<LikeablePerson> likeablePerson = likeablePersonService.findByFromInstaMember_usernameAndToInstaMember_username(fromInstaMemberUsername, toInstaMemberUsername);
-            if (likeablePerson.isPresent()) {
-                LikeablePerson likeable = likeablePerson.get();
-                model.addAttribute("likeable", likeable);
-            }
-        }
         model.addAttribute("notifications", notifications);
 
         return "usr/notification/list";

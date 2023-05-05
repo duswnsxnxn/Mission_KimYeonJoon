@@ -35,7 +35,7 @@ public class Notification extends BaseEntity {
     private int newAttractiveTypeCode; // 해당사항 없으면 0
 
     public String getReadDateStr() {
-        return readDate.format(DateTimeFormatter.ofPattern("HH시:mm분, " + ChronoUnit.MINUTES.between(readDate, LocalDateTime.now()) + "분 전"));
+        return readDate.format(DateTimeFormatter.ofPattern("HH시:mm분, " + ChronoUnit.MINUTES.between(getCreateDate(), LocalDateTime.now()) + "분 전"));
     }
 
     public String getOldAttractiveTypeDisplayName() {

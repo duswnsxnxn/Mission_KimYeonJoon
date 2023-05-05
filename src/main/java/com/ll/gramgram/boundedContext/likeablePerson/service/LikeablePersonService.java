@@ -87,6 +87,11 @@ public class LikeablePersonService {
     }
 
     public RsData canCancel(Member actor, LikeablePerson likeablePerson) {
+
+        // 쿨타임 체크
+        if (likeablePerson != null && likeablePerson.getModifyUnlockDate().isAfter(LocalDateTime.now())) {
+            return RsData.of("F-3", likeablePerson.getModifyUnlockDateRemainStrHuman() + "에 가능합니다.");
+        }
         if (likeablePerson == null) return RsData.of("F-1", "이미 삭제되었습니다.");
 
         // 수행자의 인스타계정 번호

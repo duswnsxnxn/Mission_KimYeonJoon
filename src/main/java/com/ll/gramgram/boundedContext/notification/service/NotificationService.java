@@ -35,7 +35,7 @@ public class NotificationService {
                 .toInstaMember(toInstaMember)
                 .oldGender(null)
                 .newGender(null)
-                .oldAttractiveTypeCode(0)
+                .oldAttractiveTypeCode(likeablePerson.getAttractiveTypeCode())
                 .newAttractiveTypeCode(0)
                 .readDate(null)
                 .typeCode("Like")
