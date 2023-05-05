@@ -44,3 +44,7 @@
 - 리눅스에서 복사한 부분의 맨 앞 글자가 잘려서 나오는 바람에 테스트 실패라고 나왔습니다.리눅스에서 붙여넣기 할 때 원본을 유지할 수 있는 방법은 뭔가요?
 
 **[Refactoring]**
+
+- notification list 페이지 likeablePerson대신에 notifications에서 AttractiveType참조하도록 수정
+- LikeablePersonService의 canCancel메소드에서 쿨타임 적용
+- Notification엔티티의 readDate 로직 수정
