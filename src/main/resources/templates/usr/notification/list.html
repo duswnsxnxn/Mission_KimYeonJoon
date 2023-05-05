@@ -18,7 +18,7 @@
         </div>
 
         <div class="flex flex-col gap-4" th:each="notification : ${notifications}">
-            <div class="card bg-base-100 shadow-xl" th:if="${notification.getTypeCode() == 'Like'}">
+            <div class="card bg-base-100 shadow-xl">
                 <div class="card-body">
                     <div class="flex flex-col gap-2">
                         <div>
@@ -35,31 +35,11 @@
                             <i class="fa-regular fa-message"></i>
                             내용
                         </div>
-                        <div>
+                        <div th:if="${notification.getTypeCode() == 'Like'}">
                             어떤 <span class="badge badge-primary" th:text="${notification.getFromInstaMember().getGenderDisplayName()}"></span>이 당신을 <span
                                 class="badge badge-primary" th:text="${likeable.getAttractiveTypeDisplayName()}"></span> 때문에 좋아합니다.
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card bg-base-100 shadow-xl" th:if="${notification.getTypeCode() == 'ModifyAttractiveType'}">
-                <div class="card-body">
-                    <div class="flex flex-col gap-2">
-                        <div>
-                            <i class="fa-regular fa-clock"></i>
-                            알림
-                        </div>
-                        <div>
-                            <span class="badge badge-primary" th:text="${notification.getReadDateStr()}"></span>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex flex-col gap-2">
-                        <div>
-                            <i class="fa-regular fa-message"></i>
-                            내용
-                        </div>
-                        <div>
+                        <div th:if="${notification.getTypeCode() == 'ModifyAttractiveType'}">
                             어떤 <span class="badge badge-primary" th:text="${notification.getFromInstaMember().getGenderDisplayName()}"></span>이 당신에 대한 호감사유를 <span
                                 class="badge badge-primary" th:text="${notification.getOldAttractiveTypeDisplayName()}"></span>에서
                             <span class="badge badge-primary" th:text="${notification.getNewAttractiveTypeDisplayName()}"></span>으로
