@@ -1,9 +1,12 @@
 package com.ll.gramgram.boundedContext.likeablePerson.repository;
 
+import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.ll.gramgram.boundedContext.likeablePerson.entity.QLikeablePerson.likeablePerson;
@@ -25,5 +28,27 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
                         )
                         .fetchOne()
         );
+    }
+
+    @Override
+    public List<LikeablePerson> findQslByGenderAndAttractiveTypeCode(InstaMember instaMember, String gender, Integer attractiveTypeCode) {
+        return
+                jpaQueryFactory
+                        .selectFrom(likeablePerson)
+                        .where(eqInsta(instaMember), eqGender(gender))
+                        .fetch();
+    }
+
+    private BooleanExpression eqInsta(InstaMember instaMember) {
+        if(instaMember == null) {
+            return null;
+        }
+        return likeablePerson.toInstaMember.eq(instaMember);
+    }
+    private BooleanExpression eqGender(String gender) {
+        if(gender == null || gender.isEmpty()) {
+            return null;
+        }
+        return likeablePerson.fromInstaMember.gender.eq(gender);
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -218,5 +219,14 @@ public class LikeablePersonService {
 
 
         return RsData.of("S-1", "호감사유변경이 가능합니다.");
+    }
+
+    public RsData<List<LikeablePerson>> findToLikeByCondition(InstaMember instaMember, String gender, Integer attractiveTypeCode) {
+        List<LikeablePerson> list = instaMember.getToLikeablePeople();
+        if (gender == null && attractiveTypeCode == null) {
+            return RsData.failOf(list);
+        }
+        List<LikeablePerson> result = likeablePersonRepository.findQslByGenderAndAttractiveTypeCode(instaMember, gender, attractiveTypeCode);
+        return RsData.successOf(result);
     }
 }
