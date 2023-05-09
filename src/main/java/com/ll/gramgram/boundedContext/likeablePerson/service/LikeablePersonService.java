@@ -221,7 +221,7 @@ public class LikeablePersonService {
         return RsData.of("S-1", "호감사유변경이 가능합니다.");
     }
 
-    public RsData<List<LikeablePerson>> findToLikeByCondition(InstaMember instaMember, String gender, Integer attractiveTypeCode) {
+    public RsData<List<LikeablePerson>> findToLikeByCondition(InstaMember instaMember, String gender, String attractiveTypeCode) {
         List<LikeablePerson> list = instaMember.getToLikeablePeople();
         if (gender == null && attractiveTypeCode == null) {
             return RsData.failOf(list);

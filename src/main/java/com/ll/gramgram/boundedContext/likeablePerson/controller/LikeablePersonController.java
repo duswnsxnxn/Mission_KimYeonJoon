@@ -133,7 +133,7 @@ public class LikeablePersonController {
     public String showToList(
             Model model,
             @RequestParam(value = "gender", required = false) String gender,
-            @RequestParam(value = "attractiveTypeCode", required = false) Integer attractiveTypeCode
+            @RequestParam(value = "attractiveTypeCode", required = false) String attractiveTypeCode
     ) {
         InstaMember instaMember = rq.getMember().getInstaMember();
 

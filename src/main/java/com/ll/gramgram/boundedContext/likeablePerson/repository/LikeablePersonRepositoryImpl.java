@@ -31,11 +31,11 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
     }
 
     @Override
-    public List<LikeablePerson> findQslByGenderAndAttractiveTypeCode(InstaMember instaMember, String gender, Integer attractiveTypeCode) {
+    public List<LikeablePerson> findQslByGenderAndAttractiveTypeCode(InstaMember instaMember, String gender, String attractiveTypeCode) {
         return
                 jpaQueryFactory
                         .selectFrom(likeablePerson)
-                        .where(eqInsta(instaMember), eqGender(gender))
+                        .where(eqInsta(instaMember), eqGender(gender), eqAttractiveTypeCode(instaMember, attractiveTypeCode))
                         .fetch();
     }
 
@@ -51,4 +51,13 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
         }
         return likeablePerson.fromInstaMember.gender.eq(gender);
     }
+
+    private BooleanExpression eqAttractiveTypeCode(InstaMember instaMember, String attractiveTypeCode) {
+        if(attractiveTypeCode == null || attractiveTypeCode.isEmpty()) {
+            return null;
+        }
+        return likeablePerson.attractiveTypeCode.eq(Integer.valueOf(attractiveTypeCode));
+    }
+
+
 }
