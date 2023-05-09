@@ -54,7 +54,10 @@ public class InstaMember extends InstaMemberBase {
     public void removeToLikeablePerson(LikeablePerson likeablePerson) {
         toLikeablePeople.removeIf(e -> e.equals(likeablePerson));
     }
-
+    //좋아요 전체 갯수
+    public void updateLikes() {
+        this.likes = getLikes();
+    }
     public String getGenderDisplayName() {
         return switch (gender) {
             case "W" -> "여성";
