@@ -3,15 +3,15 @@ package com.ll.gramgram.boundedContext.likeablePerson.service;
 
 import com.ll.gramgram.TestUt;
 import com.ll.gramgram.base.appConfig.AppConfig;
+import com.ll.gramgram.base.rsData.RsData;
 import com.ll.gramgram.boundedContext.instaMember.entity.InstaMember;
+import com.ll.gramgram.boundedContext.instaMember.service.InstaMemberService;
 import com.ll.gramgram.boundedContext.likeablePerson.entity.LikeablePerson;
 import com.ll.gramgram.boundedContext.likeablePerson.repository.LikeablePersonRepository;
 import com.ll.gramgram.boundedContext.member.entity.Member;
 import com.ll.gramgram.boundedContext.member.service.MemberService;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -29,6 +29,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LikeablePersonServiceTests {
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private InstaMemberService instaMemberService;
     @Autowired
     private LikeablePersonService likeablePersonService;
     @Autowired
@@ -262,5 +264,29 @@ public class LikeablePersonServiceTests {
         assertThat(
                 likeablePersonToBts.getModifyUnlockDate().isAfter(coolTime)
         ).isTrue();
+    }
+    
+    @DisplayName("toList에서 성별 필터링기능 구현")
+    @Test
+    void t009() throws Exception {
+
+        Member memberUser1 = memberService.join("user1", "1234").getData();
+        Member memberUser2 = memberService.join("user2", "1234").getData();
+        Member memberUser3 = memberService.join("user3", "1234").getData();
+        Member memberUser4 = memberService.join("user4", "1234").getData();
+        InstaMember instaMember1 = instaMemberService.connect(memberUser1, "insta_user1", "W").getData();
+        InstaMember instaMember2 = instaMemberService.connect(memberUser2, "insta_user2", "M").getData();
+        InstaMember instaMember3 = instaMemberService.connect(memberUser3, "insta_user3", "W").getData();
+        InstaMember instaMember4 = instaMemberService.connect(memberUser4, "insta_user4", "W").getData();
+        // memberUser2~4(insta_user2~4)는 insta_user1을 호감표시함
+        likeablePersonService.like(memberUser2, "insta_user1", 1).getData();
+        likeablePersonService.like(memberUser3, "insta_user1", 2).getData();
+        likeablePersonService.like(memberUser4, "insta_user1", 3).getData();
+        // insta_user1이 받은 호감 리스트를 남자만 필터링하여 불러온다.
+        List<LikeablePerson> likeByCondition = likeablePersonService.findToLikeByCondition(instaMember1, "M", "", "").getData();
+        // 필터링이 잘 되었다면 리스트 중 첫번 째 목록의 성별이 남자일 것이다.
+        Assertions
+                .assertThat(likeByCondition.get(0).getFromInstaMember().getGender())
+                .isEqualTo("M");
     }
 }
