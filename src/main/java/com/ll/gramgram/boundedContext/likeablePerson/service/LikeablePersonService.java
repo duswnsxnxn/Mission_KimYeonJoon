@@ -220,7 +220,7 @@ public class LikeablePersonService {
         return RsData.of("S-1", "호감사유변경이 가능합니다.");
     }
 
-    public RsData<List<LikeablePerson>> findToLikeByCondition(InstaMember instaMember, String gender, String attractiveTypeCode, String sortCode) {
+    public RsData<List<LikeablePerson>> findToLikeByCondition(InstaMember instaMember, String gender, int attractiveTypeCode, int sortCode) {
 
         List<LikeablePerson> result = likeablePersonRepository.findQslByGenderAndAttractiveTypeCode(instaMember, gender, attractiveTypeCode, sortCode);
         return RsData.successOf(result);

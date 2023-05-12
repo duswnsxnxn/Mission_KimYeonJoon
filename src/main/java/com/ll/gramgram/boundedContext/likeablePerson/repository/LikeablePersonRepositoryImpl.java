@@ -34,7 +34,7 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
     }
 
     @Override
-    public List<LikeablePerson> findQslByGenderAndAttractiveTypeCode(InstaMember instaMember, String gender, String attractiveTypeCode, String sortCode) {
+    public List<LikeablePerson> findQslByGenderAndAttractiveTypeCode(InstaMember instaMember, String gender, int attractiveTypeCode, int sortCode) {
         return
                 jpaQueryFactory
                         .selectFrom(likeablePerson)
@@ -50,50 +50,45 @@ public class LikeablePersonRepositoryImpl implements LikeablePersonRepositoryCus
         return likeablePerson.toInstaMember.eq(instaMember);
     }
     private BooleanExpression eqGender(String gender) {
-        if(gender == null || gender.isEmpty()) {
+        if(gender.isEmpty()) {
             return null;
         }
         return likeablePerson.fromInstaMember.gender.eq(gender);
     }
 
-    private BooleanExpression eqAttractiveTypeCode(InstaMember instaMember, String attractiveTypeCode) {
-        if(attractiveTypeCode == null || attractiveTypeCode.isEmpty()) {
+    private BooleanExpression eqAttractiveTypeCode(InstaMember instaMember, int attractiveTypeCode) {
+        if(attractiveTypeCode == 0) {
             return null;
         }
-        return likeablePerson.attractiveTypeCode.eq(Integer.valueOf(attractiveTypeCode));
+        return likeablePerson.attractiveTypeCode.eq(attractiveTypeCode);
     }
 
-    private OrderSpecifier[] sortByField(String sortCode) {
+    private OrderSpecifier[] sortByField(int sortCode) {
 
         List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
 
-        // NULL 처리
-        sortCode = (sortCode == null) ? "" : sortCode;
 
         switch (sortCode) {
-            case "1" -> orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.createDate));
-            case "2" -> orderSpecifiers.add(new OrderSpecifier<>(Order.ASC, likeablePerson.createDate));
-            case "3" -> {
+            case 1 -> orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.createDate));
+            case 2 -> orderSpecifiers.add(new OrderSpecifier<>(Order.ASC, likeablePerson.createDate));
+            case 3 -> {
                 orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.fromInstaMember.likes));
                 orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.createDate));
             }
-            case "4" -> {
+            case 4 -> {
                 orderSpecifiers.add(new OrderSpecifier<>(Order.ASC, likeablePerson.fromInstaMember.likes));
                 orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.createDate));
             }
-            case "5" -> {
+            case 5 -> {
                 orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.fromInstaMember.gender));
                 orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.createDate));
             }
-            case "6" -> {
+            case 6 -> {
                 orderSpecifiers.add(new OrderSpecifier<>(Order.ASC, likeablePerson.attractiveTypeCode));
                 orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.createDate));
             }
-            default -> orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, likeablePerson.createDate));
         }
         //다중 정렬 조건을 고려하여 배열로 반환
         return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
     }
-
-
 }

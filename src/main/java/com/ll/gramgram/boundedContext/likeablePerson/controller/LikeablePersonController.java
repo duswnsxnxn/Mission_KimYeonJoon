@@ -10,6 +10,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -120,28 +121,22 @@ public class LikeablePersonController {
         return rq.redirectWithMsg("/usr/likeablePerson/list", rsData);
     }
 
-    @AllArgsConstructor
-    @Getter
+    @Setter
     public static class ToListCondition {
-        private final String gender = null;
-        private final int attractiveTypeCode = 0;
-        private final int sortCode = 0;
+        private String gender = "";
+        private int attractiveTypeCode = 0;
+        private int sortCode = 1;
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/toList")
-    public String showToList(
-            Model model,
-            @RequestParam(value = "gender", required = false) String gender,
-            @RequestParam(value = "attractiveTypeCode", required = false) String attractiveTypeCode,
-            @RequestParam(value = "sortCode", required = false) String sortCode
-    ) {
+    public String showToList(Model model, ToListCondition toListCondition) {
         InstaMember instaMember = rq.getMember().getInstaMember();
 
         // 인스타인증을 했는지 체크
         if (instaMember != null) {
             // 해당 인스타회원이 좋아하는 사람들 목록
-            RsData<List<LikeablePerson>> likeablePeople = likeablePersonService.findToLikeByCondition(instaMember, gender, attractiveTypeCode, sortCode);
+            RsData<List<LikeablePerson>> likeablePeople = likeablePersonService.findToLikeByCondition(instaMember, toListCondition.gender, toListCondition.attractiveTypeCode, toListCondition.sortCode);
             model.addAttribute("likeablePeople", likeablePeople.getData());
         }
 
