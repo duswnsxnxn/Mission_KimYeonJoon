@@ -16,6 +16,8 @@ import lombok.experimental.SuperBuilder;
 public abstract class InstaMemberBase extends BaseEntity {
     @Setter
     String gender;
+    //OrderSpecifier의 Expression으로 이용하여 정렬 조건에 만족시키기 위해 컬럼 추가
+    long likes;
 
     long likesCountByGenderWomanAndAttractiveTypeCode1;
     long likesCountByGenderWomanAndAttractiveTypeCode2;
